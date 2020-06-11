@@ -1,5 +1,7 @@
 #UZDEVUMA APRAKSTS UN PRASĪBAS
+
 ##Nepieciešams izveidot vienkāršu REST API, kas izstrādāts JAVA programmēšanas valodā
+
 ###(ietvara lietošana pēc brīvas izvēles), kas atbilstu šādiem biznesa nosacījumiem:
 
 * API sniegs informāciju par bērnudārziem un rindām uz bērnudārzu.

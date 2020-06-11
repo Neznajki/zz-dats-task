@@ -1,8 +1,8 @@
-#UZDEVUMA APRAKSTS UN PRASĪBAS
+# UZDEVUMA APRAKSTS UN PRASĪBAS
 
-##Nepieciešams izveidot vienkāršu REST API, kas izstrādāts JAVA programmēšanas valodā
+## Nepieciešams izveidot vienkāršu REST API, kas izstrādāts JAVA programmēšanas valodā
 
-###(ietvara lietošana pēc brīvas izvēles), kas atbilstu šādiem biznesa nosacījumiem:
+### (ietvara lietošana pēc brīvas izvēles), kas atbilstu šādiem biznesa nosacījumiem:
 
 * API sniegs informāciju par bērnudārziem un rindām uz bērnudārzu.
 * API lietotājs varēs pieteikt bērnu rindā uz bērnudārzu.
@@ -10,7 +10,7 @@
 secībā.
 * API lietotājs varēs izņemt bērnu no bērnudārza rindas.
 Vienumi un minimālie lauki. Nepieciešamības gadījumā var pievienot papildus laukus.
-###Bērnudārzs:
+### Bērnudārzs:
 * Identifikators
 * Nosaukums
 * Adrese (teksta lauks, nav obligāti strukturētā veidā)
@@ -21,7 +21,7 @@ Bērns:
 * Personas kods (vienkārša validācija - lai satur 6 ciparus, defisi un vēl 5 ciparus)
 * Atzīme "Brālis vai Māsa", kas norāda, ka šī bērna brālis vai māsa mācās tajā pašā
 bērnudārzā.
-###Jānodrošina darbības:
+### Jānodrošina darbības:
 * Visu bērnudārzu saraksta izgūšana.
 * Viena bērnudārza izgūšana pēc ID.
 * Rindas uz bērnudārzu izgūšana, prioritārā secībā. Secība atkarīga no bērna pieteikšanas laika

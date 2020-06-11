@@ -15,7 +15,7 @@ Vienumi un minimālie lauki. Nepieciešamības gadījumā var pievienot papildus
 * Nosaukums
 * Adrese (teksta lauks, nav obligāti strukturētā veidā)
 * Bērnu Rinda
-Bērns:
+### Bērns:
 * Vārds
 * Uzvārds
 * Personas kods (vienkārša validācija - lai satur 6 ciparus, defisi un vēl 5 ciparus)
@@ -24,12 +24,11 @@ bērnudārzā.
 ### Jānodrošina darbības:
 * Visu bērnudārzu saraksta izgūšana.
 * Viena bērnudārza izgūšana pēc ID.
-* Rindas uz bērnudārzu izgūšana, prioritārā secībā. Secība atkarīga no bērna pieteikšanas laika
-* rindā. Bērniem, kuriem attiecīgajā bērnu dārzā mācās brālis vai māsa, ir priekšroka rindā.
+* Rindas uz bērnudārzu izgūšana, prioritārā secībā. Secība atkarīga no bērna pieteikšanas laika rindā. Bērniem, kuriem attiecīgajā bērnu dārzā mācās brālis vai māsa, ir priekšroka rindā.
 * Viena bērna pievienošana rindā dotajā bērnudārzā.
 * Viena bērna izņemšana no rindas dotajā bērnudārzā pēc personas koda.
-* Bērnudārzu sarakstu jādefinē kā statiskus datus, vai nu lietojuma atmiņā, vai arī kā datu
-* sagatavošanas skriptu in-memory vai konteinerizētā DB.
+* Bērnudārzu sarakstu jādefinē kā statiskus datus, vai nu lietojuma atmiņā, vai arī kā datu sagatavošanas skriptu in-memory vai konteinerizētā DB.
+### deploy and tests
 * Lietojumam jānodrošina vienībtesti.
 * Lietojuma kodu jāievieto Github vai līdzvērtīgā publiskā git repozitorijā, un jāatsūta links uz
 repozitoriju.

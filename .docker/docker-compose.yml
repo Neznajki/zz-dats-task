@@ -32,3 +32,5 @@ networks:
     default:
         external:
             name: local.net
+# network setup in case you need >>
+# docker network create local.net

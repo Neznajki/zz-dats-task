@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>bērnudārzu informācija</title>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<center>
+    <!--/*@thymesVar id="kindergarten" type="com.zz.dats.kindergarten.db.entity.KindergartenEntity"*/-->
+    <div th:text="${kindergarten.getId()}"></div>
+    <div th:text="${kindergarten.getName()}"></div>
+    <div th:text="${kindergarten.getAddress()}"></div>
+    cik bērnu var ietilpt bērnudārzā : <div style="display: inline-block" th:text="${kindergarten.getMaxKids()}"></div><br>
+
+
+</center>
+</body>
+</html>

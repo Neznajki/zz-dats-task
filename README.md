@@ -14,5 +14,6 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ## estimates
 * db creation = 90m + migrations implementation
-* kindergarten implementation = 90m
 * done all without sorting 8h:30m
+* done ordering 1h
+* current 11h

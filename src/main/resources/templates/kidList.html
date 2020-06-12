@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="lv" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bērnu saraksts</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/kid.js"></script>
+</head>
+<body>
+
+    <div class="error" th:text="${error?:''}"></div>
+
+    <div th:each="kid : ${kids}">
+        <div th:text="${kid.toString()}"></div>
+        <label th:for="'family' + ${kid.getId()}">family select</label>
+        <select th:id="'family' + ${kid.getId()}"
+                class="familySelect"
+                th:data-id="${kid.getId()}"
+                th:data-family-id="${kid.getFamilyEntity()?.getFamilyNamesByFamilyId()?.getId()?:-1}"
+        >
+            <option value="-1">none</option>
+            <option th:each="family : ${families}" th:value="${family.getId()}" th:text="${family.getName()}"></option>
+        </select>
+        <button class="confirmFamilyButton" type="button">mainīt ģimeni</button>
+    </div>
+
+    <form action="/kid" method="post">
+        <label for="name">vārds</label><input  id="name" name="name" type="text" value="" required th:pattern="${kidNamePattern}" th:title="${kidNameErrorMessage}">
+        <label for="lastName">uzvārds</label><input  id="lastName" name="lastName" type="text" value="" required th:pattern="${kidLastNamePattern}" th:title="${kidLastNameErrorMessage}">
+        <label for="personalCode">personas kods</label><input  id="personalCode" name="personalCode" placeholder="xxxxxx-xxxxx" type="text" required th:pattern="${kidPersonalCodePattern}" th:title="${kidPersonalCodeErrorMessage}">
+        <button type="submit">pievienot</button>
+    </form>
+</body>
+</html>

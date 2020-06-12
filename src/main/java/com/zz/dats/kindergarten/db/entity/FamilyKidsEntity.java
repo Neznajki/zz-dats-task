@@ -4,11 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "family", schema = "kindergarten")
-public class FamilyEntity {
+@Table(name = "family_kids", schema = "kindergarten")
+public class FamilyKidsEntity {
     private int id;
     private KidEntity kidByKidId;
-    private KidEntity kidBySecondKidId;
+    private FamilyNameEntity familyNamesByFamilyId;
 
     @Id
     @Column(name = "id")
@@ -24,16 +24,13 @@ public class FamilyEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FamilyEntity that = (FamilyEntity) o;
-        return id == that.id;
+        FamilyKidsEntity that = (FamilyKidsEntity) o;
+        return id == that.id &&
+            Objects.equals(kidByKidId.getId(), that.kidByKidId.getId()) &&
+            Objects.equals(familyNamesByFamilyId.getId(), that.familyNamesByFamilyId.getId());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "kid_id", referencedColumnName = "id")
     public KidEntity getKidByKidId() {
         return kidByKidId;
@@ -44,12 +41,12 @@ public class FamilyEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "second_kid_id", referencedColumnName = "id")
-    public KidEntity getKidBySecondKidId() {
-        return kidBySecondKidId;
+    @JoinColumn(name = "family_id", referencedColumnName = "id")
+    public FamilyNameEntity getFamilyNamesByFamilyId() {
+        return familyNamesByFamilyId;
     }
 
-    public void setKidBySecondKidId(KidEntity kidBySecondKidId) {
-        this.kidBySecondKidId = kidBySecondKidId;
+    public void setFamilyNamesByFamilyId(FamilyNameEntity familyNamesByFamilyId) {
+        this.familyNamesByFamilyId = familyNamesByFamilyId;
     }
 }

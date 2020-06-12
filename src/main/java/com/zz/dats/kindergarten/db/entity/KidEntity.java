@@ -1,6 +1,7 @@
 package com.zz.dats.kindergarten.db.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -10,6 +11,9 @@ public class KidEntity {
     private String name;
     private String lastName;
     private String personalCode;
+    private FamilyKidsEntity familyEntity;
+    private Collection<KindergartenKidsEntity> kindergartenKidsById;
+    private Collection<QueueEntity> queuesById;
 
     @Id
     @Column(name = "id")
@@ -65,5 +69,44 @@ public class KidEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, lastName, personalCode);
+    }
+
+    @OneToOne(mappedBy = "kidByKidId")
+    public FamilyKidsEntity getFamilyEntity() {
+        return familyEntity;
+    }
+
+    public void setFamilyEntity(FamilyKidsEntity familyKidsEntity) {
+        this.familyEntity = familyKidsEntity;
+    }
+
+    @OneToMany(mappedBy = "kidByKidId")
+    public Collection<KindergartenKidsEntity> getKindergartenKidsById() {
+        return kindergartenKidsById;
+    }
+
+    public void setKindergartenKidsById(Collection<KindergartenKidsEntity> kindergartenKidsById) {
+        this.kindergartenKidsById = kindergartenKidsById;
+    }
+
+    @OneToMany(mappedBy = "kidByKidId")
+    public Collection<QueueEntity> getQueuesById() {
+        return queuesById;
+    }
+
+    public void setQueuesById(Collection<QueueEntity> queuesById) {
+        this.queuesById = queuesById;
+    }
+
+    @Override
+    public String toString()
+    {
+        String result = String.format("%s %s (%s)", this.name, this.lastName, this.personalCode);
+
+        if (this.familyEntity != null) {
+            result = String.format("%s@%s", result, this.familyEntity.getFamilyNamesByFamilyId().toString());
+        }
+
+        return result;
     }
 }

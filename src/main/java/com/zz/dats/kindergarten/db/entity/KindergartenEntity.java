@@ -1,6 +1,7 @@
 package com.zz.dats.kindergarten.db.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -10,6 +11,8 @@ public class KindergartenEntity {
     private String name;
     private String address;
     private Integer maxKids;
+    private Collection<KindergartenKidsEntity> kindergartenKidsById;
+    private Collection<QueueEntity> queuesById;
 
     @Id
     @Column(name = "id")
@@ -65,5 +68,23 @@ public class KindergartenEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, address, maxKids);
+    }
+
+    @OneToMany(mappedBy = "kindergartenByKindergartenId")
+    public Collection<KindergartenKidsEntity> getKindergartenKidsById() {
+        return kindergartenKidsById;
+    }
+
+    public void setKindergartenKidsById(Collection<KindergartenKidsEntity> kindergartenKidsById) {
+        this.kindergartenKidsById = kindergartenKidsById;
+    }
+
+    @OneToMany(mappedBy = "kindergartenByKindergartenId")
+    public Collection<QueueEntity> getQueuesById() {
+        return queuesById;
+    }
+
+    public void setQueuesById(Collection<QueueEntity> queuesById) {
+        this.queuesById = queuesById;
     }
 }

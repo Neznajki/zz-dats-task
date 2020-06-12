@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>bērnudārzu saraksts</title>
-    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
 </head>
 <body>
-<center>
     <!--suppress ThymeleafVariablesResolveInspection -->
-    <div th:text="${error?:''}"></div>
+    <div class="error" th:text="${error?:''}"></div>
 
 
     <!--/*@thymesVar id="kindergartens" type="java.util.List<com.zz.dats.kindergarten.db.entity.KindergartenEntity>"*/-->
     <div th:each="kindergarten : ${kindergartens}">
-        <!--/*@thymesVar id="kindergarten" type="com.zz.dats.kindergarten.db.entity.KindergartenEntity"*/-->
-        <a th:text="${kindergarten.getName()}" th:href="@{kindergarten/{id}(id=${kindergarten.getId()})}"></a>
+        <a th:text="${kindergarten.getName()}" th:href="@{/kindergarten/{id}(id=${kindergarten.getId()})}"></a>
     </div>
 
-</center>
 </body>
 </html>

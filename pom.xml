@@ -19,7 +19,7 @@
         <flyway.user>user</flyway.user>
         <flyway.password>1</flyway.password>
         <flyway.schemas>kindergarten</flyway.schemas>
-        <flyway.url>jdbc:mysql://localhost:3306/kindergarten</flyway.url>
+        <flyway.url>jdbc:mysql://localhost:3306/kindergarten?useUnicode=yes&amp;characterEncoding=UTF-8</flyway.url>
     </properties>
 
     <dependencies>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="lv" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ģimenes</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+<body>
+    <div class="error" th:text="${error?:''}"></div>
+
+    <div th:each="family : ${families}">
+        <div th:text="${family.getName()}"></div>
+        <div th:each="familyKid : ${family.getFamilyKidsById()}">
+            <div th:text="${familyKid.getKidByKidId().getName()}"></div>
+        </div>
+    </div>
+
+    <form action="/family" method="post">
+        <label for="newFamily">jaunas ģimenes vārds</label><input  id="newFamily" name="newFamily" type="text" value="" required pattern=".{3,32}" title="ģimenes vārdam jābūt no 3 līdz 32 simboliem garam">
+        <button type="submit">pievienot</button>
+    </form>
+</body>
+</html>

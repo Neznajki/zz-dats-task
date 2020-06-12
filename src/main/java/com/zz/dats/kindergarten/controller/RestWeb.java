@@ -6,6 +6,7 @@ import com.zz.dats.kindergarten.db.entity.KindergartenEntity;
 import com.zz.dats.kindergarten.db.entity.QueueEntity;
 import com.zz.dats.kindergarten.db.repository.*;
 import com.zz.dats.kindergarten.handler.KidHandler;
+import com.zz.dats.kindergarten.handler.OrderHandler;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,18 +19,32 @@ import java.util.Optional;
 
 @Controller
 public class RestWeb {
+    final KidHandler kidHandler;
+    final KindergartenRepository kindergartenRepository;
+    final KindergartenKidsRepository kindergartenKidsRepository;
+    final FamilyRepository familyRepository;
+    final KidRepository kidRepository;
+    final QueueRepository queueRepository;
+    final OrderHandler orderHandler;
+
     @Autowired
-    KidHandler kidHandler;
-    @Autowired
-    KindergartenRepository kindergartenRepository;
-    @Autowired
-    KindergartenKidsRepository kindergartenKidsRepository;
-    @Autowired
-    FamilyRepository familyRepository;
-    @Autowired
-    KidRepository kidRepository;
-    @Autowired
-    QueueRepository queueRepository;
+    public RestWeb(
+        KidHandler kidHandler,
+        KindergartenRepository kindergartenRepository,
+        KindergartenKidsRepository kindergartenKidsRepository,
+        FamilyRepository familyRepository,
+        KidRepository kidRepository,
+        QueueRepository queueRepository,
+        OrderHandler orderHandler
+    ) {
+        this.kidHandler = kidHandler;
+        this.kindergartenRepository = kindergartenRepository;
+        this.kindergartenKidsRepository = kindergartenKidsRepository;
+        this.familyRepository = familyRepository;
+        this.kidRepository = kidRepository;
+        this.queueRepository = queueRepository;
+        this.orderHandler = orderHandler;
+    }
 
     @GetMapping("")
     public ModelAndView homepage() {
@@ -51,8 +66,12 @@ public class RestWeb {
             return getKindergartenListModel().addObject("error", String.format("bērnudārzs ar id %d nav atrasts", id));
         }
 
+        KindergartenEntity kindergartenEntity = kindergarten.get();
+
+        orderHandler.sortKids(kindergartenEntity);
+
         return new ModelAndView("kindergartenInfo")
-            .addObject("kindergarten", kindergarten.get())
+            .addObject("kindergarten", kindergartenEntity)
             .addObject("kids", kidRepository.getKidsAvailableFor(id));
     }
 
@@ -147,7 +166,7 @@ public class RestWeb {
         @PathVariable("kidId") Integer kidId,
         @PathVariable("familyId") Integer familyId
     ) {
-        if (familyId.equals(-1)) {
+        if (familyId.equals(- 1)) {
             this.kidHandler.setFamily(kidId, null);
         } else {
             this.kidHandler.setFamily(kidId, this.familyRepository.getOne(familyId));

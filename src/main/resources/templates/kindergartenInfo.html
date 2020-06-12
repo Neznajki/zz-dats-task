@@ -26,7 +26,7 @@
         <div style="display: inline-block" th:text="${kid.getKidByKidId().toString()}"></div><button class="removeFromQueue" th:data-kidId="${kid.getKidByKidId().getId()}">-</button>
     </div>
 
-    <form action="'/kindergarten/' + ${kindergarten.getId()}" method="post">
+    <form th:action="'/kindergarten/' + ${kindergarten.getId()}" method="post">
         <input name="id" type="hidden" th:value="${kindergarten.getId()}">
         <label for="newMember">jauns bērns</label><select id="newMember" name="newMember"><option th:each="kid : ${kids}" th:value="${kid.getId()}" th:text="${kid.toString()}"></option></select>
         <button type="submit">pievienot</button>

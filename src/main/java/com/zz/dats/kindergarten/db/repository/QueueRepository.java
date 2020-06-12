@@ -21,7 +21,7 @@ public interface QueueRepository extends JpaRepository<QueueEntity, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value ="DELETE q FROM queue as q, kindergarten_kids as kk WHERE kk.kindergarten_id = q.kindergarten_id AND kk.kid_id = q.kid_id AND q.kindergarten_id = :kindergartenId", nativeQuery = true)
+    @Query(value ="DELETE q FROM queue as q, kindergarten_kids as kk WHERE kk.kid_id = q.kid_id AND kk.kindergarten_id = :kindergartenId", nativeQuery = true)
     void removeAddedKids(@Param("kindergartenId") Integer kindergartenId);
 
 

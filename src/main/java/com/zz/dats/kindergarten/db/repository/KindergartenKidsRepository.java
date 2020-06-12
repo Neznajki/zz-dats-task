@@ -13,9 +13,10 @@ public interface KindergartenKidsRepository extends JpaRepository<KindergartenKi
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO kindergarten_kids (kindergarten_id, kid_id) SELECT kindergarten_id, kid_id FROM `queue` WHERE kindergarten_id = :kindergartenId", nativeQuery = true)
+    @Query(value = "INSERT INTO kindergarten_kids (kindergarten_id, kid_id) SELECT kindergarten_id, kid_id FROM `queue` WHERE kindergarten_id = :kindergartenId LIMIT :limit", nativeQuery = true)
     void addKidsFromQueue(
-        @Param("kindergartenId") Integer kindergartenId
+        @Param("kindergartenId") Integer kindergartenId,
+        @Param("limit") Integer limit
     );
 
 

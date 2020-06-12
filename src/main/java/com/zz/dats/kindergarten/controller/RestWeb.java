@@ -87,11 +87,22 @@ public class RestWeb {
     }
 
     @PostMapping("/kindergarten/dispatch/{id}")
-    public ModelAndView kindergartenAddKid(
+    public synchronized ModelAndView kindergartenAddKid(
         @PathVariable("id") Integer id
     ) {
-        kindergartenKidsRepository.addKidsFromQueue(id);
-        queueRepository.removeAddedKids(id);
+        Optional<KindergartenEntity> kindergartenOptional = kindergartenRepository.findById(id);
+
+        if (kindergartenOptional.isPresent()) {
+            KindergartenEntity kindergartenEntity = kindergartenOptional.get();
+            int limit = kindergartenEntity.getMaxKids() - kindergartenEntity.getKindergartenKidsById().size();
+
+            if (limit > 0) {
+                kindergartenKidsRepository.addKidsFromQueue(id, limit);
+                queueRepository.removeAddedKids(id);
+            }
+
+        }
+
 
         return new ModelAndView(String.format("redirect:/kindergarten/%d", id));
     }

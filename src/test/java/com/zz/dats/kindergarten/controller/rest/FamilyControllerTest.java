@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -51,10 +52,29 @@ public class FamilyControllerTest {
         this.mockMvc.perform(post("/family").param("newFamily", newFamilyValueMock)).andDo(print()).andExpect(status().isOk())
             .andExpect(content().string(containsString(testData.getKidEntity().toString())))
             .andExpect(content().string(containsString(testData.getFamilyNameEntity().getName())))
-            .andExpect(content().string(not(matchesRegex("ģimene ar vārdu .* jau eksistē"))))
+            .andExpect(content().string(not(containsString(String.format("ģimene ar vārdu %s jau eksistē", newFamilyValueMock)))))
         ;
 
         verify(familyRepository, times(1)).save(argThat(familyNameEntity -> familyNameEntity.getName().equals(newFamilyValueMock)));
+    }
+
+    @Test
+    public void familyAddDuplicateTest() throws Exception {
+        TestData testData = new TestData().invoke();
+        String newFamilyValueMock = "testMock";
+
+        when(
+            familyRepository.save(
+                argThat(familyNameEntity -> familyNameEntity.getName().equals(newFamilyValueMock))
+            )
+        ).thenThrow(new DataIntegrityViolationException("unit test"));
+        when(familyRepository.findAll()).thenReturn(testData.getFamilyNameEntityList());
+        this.mockMvc.perform(post("/family").param("newFamily", newFamilyValueMock)).andDo(print()).andExpect(status().isOk())
+            .andExpect(content().string(containsString(testData.getKidEntity().toString())))
+            .andExpect(content().string(containsString(testData.getFamilyNameEntity().getName())))
+            .andExpect(content().string(containsString(String.format("ģimene ar vārdu %s jau eksistē", newFamilyValueMock))))
+        ;
+
     }
 
     private static class TestData {

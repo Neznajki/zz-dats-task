@@ -11,7 +11,7 @@
     <div th:each="family : ${families}">
         <div th:text="${family.getName()}"></div>
         <div th:each="familyKid : ${family.getFamilyKidsById()}">
-            <div th:text="${familyKid.getKidByKidId().getName()}"></div>
+            <div th:text="${familyKid.getKidByKidId().toString()}"></div>
         </div>
     </div>
 

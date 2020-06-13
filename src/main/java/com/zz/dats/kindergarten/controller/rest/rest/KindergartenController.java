@@ -1,11 +1,9 @@
-package com.zz.dats.kindergarten.controller;
+package com.zz.dats.kindergarten.controller.rest.rest;
 
-import com.zz.dats.kindergarten.db.entity.FamilyNameEntity;
 import com.zz.dats.kindergarten.db.entity.KidEntity;
 import com.zz.dats.kindergarten.db.entity.KindergartenEntity;
 import com.zz.dats.kindergarten.db.entity.QueueEntity;
 import com.zz.dats.kindergarten.db.repository.*;
-import com.zz.dats.kindergarten.handler.KidHandler;
 import com.zz.dats.kindergarten.handler.OrderHandler;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,37 +16,26 @@ import java.sql.Timestamp;
 import java.util.Optional;
 
 @Controller
-public class RestWeb {
-    final KidHandler kidHandler;
+public class KindergartenController {
     final KindergartenRepository kindergartenRepository;
     final KindergartenKidsRepository kindergartenKidsRepository;
-    final FamilyRepository familyRepository;
     final KidRepository kidRepository;
     final QueueRepository queueRepository;
     final OrderHandler orderHandler;
 
     @Autowired
-    public RestWeb(
-        KidHandler kidHandler,
+    public KindergartenController(
         KindergartenRepository kindergartenRepository,
         KindergartenKidsRepository kindergartenKidsRepository,
-        FamilyRepository familyRepository,
         KidRepository kidRepository,
         QueueRepository queueRepository,
         OrderHandler orderHandler
     ) {
-        this.kidHandler = kidHandler;
         this.kindergartenRepository = kindergartenRepository;
         this.kindergartenKidsRepository = kindergartenKidsRepository;
-        this.familyRepository = familyRepository;
         this.kidRepository = kidRepository;
         this.queueRepository = queueRepository;
         this.orderHandler = orderHandler;
-    }
-
-    @GetMapping("")
-    public ModelAndView homepage() {
-        return new ModelAndView("layout");
     }
 
     @GetMapping("/kindergarten")
@@ -136,92 +123,6 @@ public class RestWeb {
         }
 
         return this.kindergarten(id);
-    }
-
-    @GetMapping("/kid")
-    public ModelAndView kid() {
-        return getKidListModel();
-    }
-
-    @PostMapping("/kid")
-    public ModelAndView kid(
-        @RequestParam(name = "name") String name,
-        @RequestParam(name = "lastName") String lastName,
-        @RequestParam(name = "personalCode") String personalCode
-    ) {
-        try {
-            if (! kidHandler.isNameValid(name)) {
-                return getKidListModel().addObject("error", KidHandler.kidNameErrorMessage);
-            }
-            if (! kidHandler.isLastNameValid(lastName)) {
-                return getKidListModel().addObject("error", KidHandler.kidLastNameErrorMessage);
-            }
-            if (! kidHandler.isPersonalCodeValid(personalCode)) {
-                return getKidListModel().addObject("error", KidHandler.kidPersonalCodeErrorMessage);
-            }
-
-            kidHandler.addKid(name, lastName, personalCode);
-        } catch (DataIntegrityViolationException exception) {
-            return getKidListModel().addObject(
-                "error",
-                String.format("bērns ar %s personas kodu jau eksistē", personalCode)
-            );
-        }
-
-        return getKidListModel();
-    }
-
-    @PutMapping("/kid/family/{kidId}/{familyId}")
-    @ResponseBody
-    public String changeKidFamily(
-        @PathVariable("kidId") Integer kidId,
-        @PathVariable("familyId") Integer familyId
-    ) {
-        if (familyId.equals(- 1)) {
-            this.kidHandler.setFamily(kidId, null);
-        } else {
-            this.kidHandler.setFamily(kidId, this.familyRepository.getOne(familyId));
-        }
-
-        return "done";
-    }
-
-    private ModelAndView getKidListModel() {
-        return new ModelAndView("kidList")
-            .addObject("kids", kidRepository.findAll())
-            .addObject("families", familyRepository.findAll())
-            .addObject("kidNameErrorMessage", KidHandler.kidNameErrorMessage)
-            .addObject("kidLastNameErrorMessage", KidHandler.kidLastNameErrorMessage)
-            .addObject("kidPersonalCodeErrorMessage", KidHandler.kidPersonalCodeErrorMessage)
-            .addObject("kidNamePattern", KidHandler.kidNamePattern)
-            .addObject("kidLastNamePattern", KidHandler.kidLastNamePattern)
-            .addObject("kidPersonalCodePattern", KidHandler.kidPersonalCodePattern);
-    }
-
-    @GetMapping("/family")
-    public ModelAndView family() {
-        return getFamilyListModel();
-    }
-
-    @PostMapping("/family")
-    public ModelAndView family(
-        @RequestParam(name = "newFamily") String newFamily
-    ) {
-        FamilyNameEntity familyNameEntity = new FamilyNameEntity();
-        familyNameEntity.setName(newFamily);
-
-        try {
-            familyRepository.save(familyNameEntity);
-        } catch (DataIntegrityViolationException exception) {
-            return getFamilyListModel().addObject("error", String.format("ģimene ar vārdu %s jau eksistē", newFamily));
-        }
-
-        return getFamilyListModel();
-    }
-
-    private ModelAndView getFamilyListModel() {
-        return new ModelAndView("family")
-            .addObject("families", familyRepository.findAll());
     }
 
     private ModelAndView getKindergartenListModel() {

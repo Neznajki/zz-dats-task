@@ -17,4 +17,7 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 * done all without sorting 8h:30m
 * done ordering 1h
 * fixed some bugs 1h
-* current 12h
+* test implementation 3h
+* current 15h
+
+## made partial tests in case I need to finish test coverage please request.

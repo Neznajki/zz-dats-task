@@ -29,6 +29,7 @@
         <label for="name">vārds</label><input  id="name" name="name" type="text" value="" required th:pattern="${kidNamePattern}" th:title="${kidNameErrorMessage}">
         <label for="lastName">uzvārds</label><input  id="lastName" name="lastName" type="text" value="" required th:pattern="${kidLastNamePattern}" th:title="${kidLastNameErrorMessage}">
         <label for="personalCode">personas kods</label><input  id="personalCode" name="personalCode" placeholder="xxxxxx-xxxxx" type="text" required th:pattern="${kidPersonalCodePattern}" th:title="${kidPersonalCodeErrorMessage}">
+        <label for="gender">personas kods</label><select id="gender" name="gender" ><option value="m">vīrietis</option><option value="f">siviete</option> </select>
         <button type="submit">pievienot</button>
     </form>
 </body>

@@ -15,7 +15,7 @@
     <description>Demo project for ZZ dats</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>14</java.version>
         <flyway.user>user</flyway.user>
         <flyway.password>1</flyway.password>
         <flyway.schemas>kindergarten</flyway.schemas>

@@ -11,6 +11,7 @@ public class KidEntity {
     private String name;
     private String lastName;
     private String personalCode;
+    private String gender;
     private FamilyKidsEntity familyEntity;
     private Collection<KindergartenKidsEntity> kindergartenKidsById;
     private Collection<QueueEntity> queuesById;
@@ -53,6 +54,16 @@ public class KidEntity {
 
     public void setPersonalCode(String personalCode) {
         this.personalCode = personalCode;
+    }
+
+    @Basic
+    @Column(name = "gender")
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override
@@ -101,7 +112,7 @@ public class KidEntity {
     @Override
     public String toString()
     {
-        String result = String.format("%s %s (%s)", this.name, this.lastName, this.personalCode);
+        String result = String.format("%s %s (%s)| %s ", this.name, this.lastName, this.personalCode, this.gender.equals("m") ? "vīrietis" : "sieviete");
 
         if (this.familyEntity != null) {
             result = String.format("%s@%s", result, this.familyEntity.getFamilyNamesByFamilyId().toString());
